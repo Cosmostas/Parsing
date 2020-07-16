@@ -49,10 +49,12 @@ class LeroymerlinPhotosPipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
         if results:
             item['photos'] = [itm[1] for itm in results if itm[0]]
+            item['price'] = item['price'][0] 
+            item['_id'] = self.parse_id(item['url'])
             self.parse_specifications(item)
         return item
 
-    def parse_id(url):
+    def parse_id(self, url):
         end_pos = len(url) - 1
         beg_pos = 0
         for i in range(end_pos, 0, -1):
